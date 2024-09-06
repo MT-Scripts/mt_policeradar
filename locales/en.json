@@ -6,5 +6,7 @@
     "front": "Front",
     "rear": "Rear",
     "plate": "Plate",
-    "speed": "Speed"
+    "speed": "Speed",
+    "lockRadarKeybind": "Lock/Unlock radar",
+    "toggleRadarKeybind": "Enable/Disable radar"
 }

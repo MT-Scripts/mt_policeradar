@@ -6,5 +6,7 @@
     "front": "Dianteira",
     "rear": "Traseira",
     "plate": "Matricula",
-    "speed": "Velocidade"
+    "speed": "Velocidade",
+    "lockRadarKeybind": "Trancar/Destrancar radar (SAPD)",
+    "toggleRadarKeybind": "Ligar/Desligar radar (SAPD)"
 }
