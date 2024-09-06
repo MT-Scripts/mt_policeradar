@@ -94,9 +94,8 @@ lib.onCache('vehicle', function(veh)
     end
 end)
 
-Citizen.CreateThread(function() -- Support for restarting the script
+Citizen.CreateThread(function() -- Support for restarting the script while being in a vehicle
     if LocalPlayer.state.isLoggedIn then
-        print('Restarting script')
         if cache.vehicle then
             if GetVehicleClass(cache.vehicle) == 18 then
                 vehicleLoop()
