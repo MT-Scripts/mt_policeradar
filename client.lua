@@ -43,9 +43,9 @@ RegisterCommand(Radar.showRadarCommand, function()
 end)
 RegisterKeyMapping(Radar.showRadarCommand, locale('toggleRadarKeybind'), 'KEYBOARD', Radar.showRadarKeybind)
 
-CreateThread(function()
-    while true do
-        if IsPedInAnyVehicle(cache.ped, false) and (GetVehicleClass(GetVehiclePedIsIn(cache.ped, false)) == 18) then
+local function vehicleLoop()
+    Citizen.CreateThread(function()
+        while cache.vehicle do
             if (not showingRadar) and showRadar then
                 local position = json.decode(GetResourceKvpString('radarPosition')) or { x = 1580, y = 860 }
                 SendNUIMessage({ action = 'setVisibleRadar', data = true })
@@ -77,13 +77,30 @@ CreateThread(function()
                     SendNUIMessage({ action = 'updateRearCar', data = { speed = math.ceil(GetEntitySpeed(j) * 3.6), plate = GetVehicleNumberPlateText(j) } })
                 end
             end
-            Wait(200)
-        else
-            if showingRadar then
-                SendNUIMessage({ action = 'setVisibleRadar', data = false })
-                showingRadar = false
+            Wait(Radar.radarUpdateInterval)
+        end
+        if showingRadar then
+            SendNUIMessage({ action = 'setVisibleRadar', data = false })
+            showingRadar = false
+        end
+    end)
+end
+
+lib.onCache('vehicle', function(veh)
+    if veh then
+        if GetVehicleClass(veh) == 18 then
+            vehicleLoop()
+        end
+    end
+end)
+
+Citizen.CreateThread(function() -- Support for restarting the script
+    if LocalPlayer.state.isLoggedIn then
+        print('Restarting script')
+        if cache.vehicle then
+            if GetVehicleClass(cache.vehicle) == 18 then
+                vehicleLoop()
             end
-            Wait(1000)
         end
     end
 end)

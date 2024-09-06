@@ -17,4 +17,7 @@ return {
     
     -- Command to change the radar position.
     changeRadarPositionCommand = 'posradar', -- DEFAULT: posradar
+
+    -- Interval in milliseconds to update the radar. The lower the value, the more accurate the radar will be, but it will consume more resources (higher resmon).
+    radarUpdateInterval = 200, -- DEFAULT: 200
 }
