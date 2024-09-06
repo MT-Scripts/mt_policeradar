@@ -97,6 +97,7 @@ end)
 Citizen.CreateThread(function() -- Support for restarting the script while being in a vehicle
     if LocalPlayer.state.isLoggedIn then
         if cache.vehicle then
+            Wait(1000) -- Wait for NUI to be ready
             if GetVehicleClass(cache.vehicle) == 18 then
                 vehicleLoop()
             end
