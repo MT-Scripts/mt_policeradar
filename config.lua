@@ -1,12 +1,20 @@
 return {
-    locale = 'en',
-    defaultShowingRadar = true,
+    -- Locale to use for the radar. The locale file must be in the locales folder of the resource.
+    locale = 'en', -- DEFAULT: en
 
-    showRadarCommand = 'radar',
-    showRadarKeybind = 'F7',
+    -- Default state of the radar when the resource is started.
+    defaultShowingRadar = true, -- DEFAULT: true
 
-    lockRadarCommand = 'lockradar',
-    lockRadarKeybind = 'F6',
+    -- Command to show/hide the radar.
+    showRadarCommand = 'radar', -- DEFAULT: radar
+    -- Keybind to show/hide the radar.
+    showRadarKeybind = 'F7', -- DEFAULT: F7
+
+    -- Command to lock/unlock the radar.
+    lockRadarCommand = 'lockradar', -- DEFAULT: lockradar
+    -- Keybind to lock/unlock the radar.
+    lockRadarKeybind = 'F6', -- DEFAULT: F6
     
-    changeRadarPositionCommand = 'posradar',
+    -- Command to change the radar position.
+    changeRadarPositionCommand = 'posradar', -- DEFAULT: posradar
 }

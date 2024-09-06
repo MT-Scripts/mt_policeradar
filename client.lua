@@ -32,7 +32,7 @@ RegisterCommand(Radar.lockRadarCommand, function()
         notify(radarLocked and locale('locked') or locale('unlocked'), 'info')
     end
 end)
-RegisterKeyMapping(Radar.lockRadarCommand, 'Trancar/Destrancar radar (SAPD)', 'KEYBOARD', Radar.lockRadarKeybind)
+RegisterKeyMapping(Radar.lockRadarCommand, locale('lockRadarKeybind'), 'KEYBOARD', Radar.lockRadarKeybind)
 
 RegisterCommand(Radar.showRadarCommand, function()
     if IsPedInAnyVehicle(cache.ped, false) and (GetVehicleClass(GetVehiclePedIsIn(cache.ped, false)) == 18) then
@@ -41,7 +41,7 @@ RegisterCommand(Radar.showRadarCommand, function()
         notify(showRadar and locale('enabled') or locale('disabled'), 'info')
     end
 end)
-RegisterKeyMapping(Radar.showRadarCommand, 'Ligar/Desligar radar (SAPD)', 'KEYBOARD', Radar.showRadarKeybind)
+RegisterKeyMapping(Radar.showRadarCommand, locale('toggleRadarKeybind'), 'KEYBOARD', Radar.showRadarKeybind)
 
 CreateThread(function()
     while true do
