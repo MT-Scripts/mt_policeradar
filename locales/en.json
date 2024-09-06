@@ -1,0 +1,10 @@
+{
+    "locked": "Radar locked",
+    "unlocked": "Radar unlocked",
+    "enabled": "Radar enabled",
+    "disabled": "Radar disabled",
+    "front": "Front",
+    "rear": "Rear",
+    "plate": "Plate",
+    "speed": "Speed"
+}
