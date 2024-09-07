@@ -58,15 +58,17 @@ local function vehicleLoop()
                 showingRadar = false
             end
 
-            if IsPauseMenuActive() then
-                SendNUIMessage({ action = 'setVisibleRadar', data = false })
-                showingRadar = false
-            else
-                local position = json.decode(GetResourceKvpString('radarPosition')) or { x = 1580, y = 860 }
-                SendNUIMessage({ action = 'setVisibleRadar', data = true })
-                SendNUIMessage({ action = 'setLocale', data = json.decode(LoadResourceFile(cache.resource, ('locales/%s.json'):format(Radar.locale or 'en'))) })
-                SendNUIMessage({ action = 'setRadarPosition', data = { x = position.x, y = position.y } })
-                showingRadar = true
+            if showingRadar then 
+                if IsPauseMenuActive() then
+                    SendNUIMessage({ action = 'setVisibleRadar', data = false })
+                    showingRadar = false
+                else
+                    local position = json.decode(GetResourceKvpString('radarPosition')) or { x = 1580, y = 860 }
+                    SendNUIMessage({ action = 'setVisibleRadar', data = true })
+                    SendNUIMessage({ action = 'setLocale', data = json.decode(LoadResourceFile(cache.resource, ('locales/%s.json'):format(Radar.locale or 'en'))) })
+                    SendNUIMessage({ action = 'setRadarPosition', data = { x = position.x, y = position.y } })
+                    showingRadar = true
+                end
             end
 
             if showingRadar and (not radarLocked) then
