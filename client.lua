@@ -1,6 +1,7 @@
 lib.locale()
 local Radar = lib.load('config')
 local showRadar = (not GetResourceKvpInt('showRadar') and Radar.defaultShowingRadar or false) or (GetResourceKvpInt('showRadar') == 1 and true or false)
+local speedMultiplier = Radar.speedType == "MPH" and 2.23694 or 3.6
 local showingRadar = false
 local radarLocked = false
 
@@ -57,6 +58,17 @@ local function vehicleLoop()
                 showingRadar = false
             end
 
+            if IsPauseMenuActive() then
+                SendNUIMessage({ action = 'setVisibleRadar', data = false })
+                showingRadar = false
+            else
+                local position = json.decode(GetResourceKvpString('radarPosition')) or { x = 1580, y = 860 }
+                SendNUIMessage({ action = 'setVisibleRadar', data = true })
+                SendNUIMessage({ action = 'setLocale', data = json.decode(LoadResourceFile(cache.resource, ('locales/%s.json'):format(Radar.locale or 'en'))) })
+                SendNUIMessage({ action = 'setRadarPosition', data = { x = position.x, y = position.y } })
+                showingRadar = true
+            end
+
             if showingRadar and (not radarLocked) then
                 local veh = GetVehiclePedIsIn(cache.ped, false)
                 local coordA = GetOffsetFromEntityInWorldCoords(veh, 0.0, 1.0, 1.0)
@@ -66,7 +78,7 @@ local function vehicleLoop()
                 local a, b, c, d, e = GetShapeTestResult(frontcar)
 
                 if IsEntityAVehicle(e) then
-                    SendNUIMessage({ action = 'updateFrontCar', data = { speed = math.ceil(GetEntitySpeed(e) * 3.6), plate = GetVehicleNumberPlateText(e) } })
+                    SendNUIMessage({ action = 'updateFrontCar', data = { speed = math.ceil(GetEntitySpeed(e) * speedMultiplier), plate = GetVehicleNumberPlateText(e) } })
                 end
 
                 local bcoordB = GetOffsetFromEntityInWorldCoords(veh, 0.0, -105.0, 0.0)
@@ -74,7 +86,7 @@ local function vehicleLoop()
                 local f, g, h, i, j = GetShapeTestResult(rearcar)
 
                 if IsEntityAVehicle(j) then
-                    SendNUIMessage({ action = 'updateRearCar', data = { speed = math.ceil(GetEntitySpeed(j) * 3.6), plate = GetVehicleNumberPlateText(j) } })
+                    SendNUIMessage({ action = 'updateRearCar', data = { speed = math.ceil(GetEntitySpeed(j) * speedMultiplier), plate = GetVehicleNumberPlateText(j) } })
                 end
             end
             Wait(Radar.radarUpdateInterval)

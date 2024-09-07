@@ -10,6 +10,8 @@ return {
     -- Keybind to show/hide the radar.
     showRadarKeybind = 'F7', -- DEFAULT: F7
 
+    speedType = 'MPH', -- KMH or MPH
+
     -- Command to lock/unlock the radar.
     lockRadarCommand = 'lockradar', -- DEFAULT: lockradar
     -- Keybind to lock/unlock the radar.
