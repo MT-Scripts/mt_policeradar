@@ -5,6 +5,8 @@ local speedMultiplier = Radar.speedType == "MPH" and 2.23694 or 3.6
 local showingRadar = false
 local radarLocked = false
 
+---@param message string
+---@param type string
 notify = function(message, type)
     lib.notify({ description = message, type = type })
 end
@@ -23,16 +25,16 @@ RegisterCommand(Radar.changeRadarPositionCommand, function()
     if showingRadar then
         SetNuiFocus(true, true)
     end
-end)
+end, false)
 
 RegisterCommand(Radar.lockRadarCommand, function()
     if showingRadar then
         radarLocked = (not radarLocked)
         SendNUIMessage({ action = 'updateRadarLocked', data = radarLocked })
-        PlaySoundFrontend( -1, "Beep_Red", "DLC_HEIST_HACKING_SNAKE_SOUNDS", 1)
+        PlaySoundFrontend( -1, "Beep_Red", "DLC_HEIST_HACKING_SNAKE_SOUNDS", true)
         notify(radarLocked and locale('locked') or locale('unlocked'), 'info')
     end
-end)
+end, false)
 RegisterKeyMapping(Radar.lockRadarCommand, locale('lockRadarKeybind'), 'KEYBOARD', Radar.lockRadarKeybind)
 
 RegisterCommand(Radar.showRadarCommand, function()
@@ -41,7 +43,7 @@ RegisterCommand(Radar.showRadarCommand, function()
         SetResourceKvpInt('showRadar', showRadar and 1 or 0)
         notify(showRadar and locale('enabled') or locale('disabled'), 'info')
     end
-end)
+end, false)
 RegisterKeyMapping(Radar.showRadarCommand, locale('toggleRadarKeybind'), 'KEYBOARD', Radar.showRadarKeybind)
 
 local function vehicleLoop()
