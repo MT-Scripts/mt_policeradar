@@ -21,6 +21,13 @@ RegisterNuiCallback('saveRadarPosition', function(data, cb)
     cb(true)
 end)
 
+RegisterNetEvent('policeradar:toggleRadar', function(source)
+    if IsPedInAnyVehicle(cache.ped, false) and (GetVehicleClass(GetVehiclePedIsIn(cache.ped, false)) == 18) then
+        showRadar = (not showRadar)
+        SetResourceKvpInt('showRadar', showRadar and 1 or 0)
+    end
+end)
+
 RegisterCommand(Radar.changeRadarPositionCommand, function()
     if showingRadar then
         SetNuiFocus(true, true)
